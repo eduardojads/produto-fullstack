@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { CategoriaDTO } from "../models/categoria";
+import type { CategoriaDTO, CategoriaInputDTO } from "../models/categoria";
 import { BASE_URL } from "../utils/system";
 
 export async function  findAll(): Promise<CategoriaDTO[]> {
@@ -26,4 +26,8 @@ export async function update(categoria: CategoriaDTO) {
 
 export async function deleteById(id: number){
     await axios.delete(`${BASE_URL}/categorias/${id}`);
+}
+
+export async function create(categoria: CategoriaInputDTO): Promise<void> {
+    await axios.post(`${BASE_URL}/categorias`, categoria);
 }

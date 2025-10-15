@@ -2,6 +2,7 @@
 import {
   Alert,
   Box,
+  Button,
   CircularProgress,
   IconButton,
   Paper,
@@ -70,10 +71,32 @@ export default function ListarCategorias() {
     
   }
 
-
-
   return (
     <Box sx={{ p: 4 }}>
+
+      {/* Box para alinhar Título e Botão lado a lado */}
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                mb: 3,
+              }}
+            >
+              <Typography variant="h4" component="h1" gutterBottom>
+                Página de Listagem de Categoria
+              </Typography>
+      
+              {/* Botão NOVO */}
+              <Button variant="contained">
+                <Link
+                  to="/categorias/novo"
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  Novo
+                </Link>
+              </Button>
+            </Box>
 
     {success && (
       <Alert severity="success" sx={{mb: 2}}>
