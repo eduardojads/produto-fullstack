@@ -11,3 +11,11 @@ export type ProdutoDTO = {
 
     lojas: LojaDTO[];
 }
+
+export type ProdutoUpdateDTO = {
+    nome: string;
+    descricao: string;
+    valor: number;
+    categoria: {id: number}; //Objeto Categoria aninhado
+    lojas: {id: number}[];
+}

@@ -1,4 +1,17 @@
-import { Box, Typography, Alert, Table, TableHead, TableRow, TableContainer, TableCell, Paper, TableBody, IconButton, CircularProgress } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Alert,
+  Table,
+  TableHead,
+  TableRow,
+  TableContainer,
+  TableCell,
+  Paper,
+  TableBody,
+  IconButton,
+  CircularProgress,
+} from "@mui/material";
 import type { ProdutoDTO } from "../../../models/produto";
 import { useEffect, useState } from "react";
 import * as produtoService from "../../../services/produto-service";
@@ -12,6 +25,8 @@ export default function ListarProdutos() {
   const [isLoading, setIsLoading] = useState(true);
 
   const [error, setError] = useState<string | null>(null);
+
+  const [success, setSuccess] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchProdutos = async () => {
@@ -32,12 +47,32 @@ export default function ListarProdutos() {
     fetchProdutos();
   }, []);
 
+  const handleDelete = async (id: number) => {
+    if (window.confirm(`Tem certeza que deseja excluir o Produto ID: ${id}?`)) {
+      try {
+        await produtoService.deleteById(id);
+        setProdutos(produtos.filter((produto) => produto.id !== id));
+        setSuccess("Produto excluído com sucesso!");
+        setTimeout(() => setSuccess(null), 3000);
+      } catch (error: unknown) {
+        let msg = "Erro ao excluir produto";
+
+        if (axios.isAxiosError(error) && error.response) {
+          msg = error.response.data.error || msg;
+        }
+
+        setSuccess(null);
+        setError(msg);
+        setTimeout(() => setError(null), 3000);
+      }
+    }
+  };
 
   return (
     <Box sx={{ p: 4 }}>
-      {isLoading && (
+      {success && (
         <Alert severity="success" sx={{ mb: 2 }}>
-          {isLoading}
+          {success}
         </Alert>
       )}
       {error && (
@@ -96,7 +131,7 @@ export default function ListarProdutos() {
 
                         <IconButton
                           aria-label="excluir"
-                          //onClick={() => handleDelete(produto.id)}
+                          onClick={() => handleDelete(produto.id)}
                           sx={{ ml: 1 }}
                         >
                           <Delete />

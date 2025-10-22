@@ -108,9 +108,6 @@ export default function ListarCategorias() {
         {error}
       </Alert>
     )}
-      <Typography variant="h4" component="h1" gutterBottom>
-        Listagem de Categorias
-      </Typography>
 
       {loading ? (
         <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
@@ -138,7 +135,7 @@ export default function ListarCategorias() {
                       <IconButton 
                         aria-label="editar"
                         component={Link}
-                        to={`/categorias/${categoria.id}/editar`}
+                        to={`/categorias/editar/${categoria.id}`}
                       >
                          <Edit />
                       </IconButton>
